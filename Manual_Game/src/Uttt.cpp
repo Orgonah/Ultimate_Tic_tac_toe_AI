@@ -28,6 +28,9 @@ bool Uttt::UpdateBoard(int Xpos, int Ypos, bool turn) {
         if (this->ultra_board[row][col]->isEnable == false)
             return false;
         else {
+            if(this->ultra_board[row][col]->board[r][c])
+                return false;
+                
             if (turn)
                 this->ultra_board[row][col]->board[r][c] = 1;
             else
