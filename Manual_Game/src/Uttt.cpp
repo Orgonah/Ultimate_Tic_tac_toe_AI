@@ -18,12 +18,12 @@ bool Uttt::UpdateBoard(int Xpos, int Ypos, bool turn) {
     }
     else {
         int row, col, r, c;
-        row = Xpos / ((screenWidth / 3) + borderWidth);
-        col = Ypos / ((screenHeight / 3) + borderWidth);
-        Xpos -= row * ((screenWidth / 3) + borderWidth);
-        Ypos -= col * ((screenHeight / 3) + borderWidth);
-        r = Xpos / (screenWidth / 9);
-        c = Ypos / (screenHeight / 9);
+        col = Xpos / ((screenWidth / 3) + borderWidth);
+        row = Ypos / ((screenHeight / 3) + borderWidth);
+        Xpos -= col * ((screenWidth / 3) + borderWidth);
+        Ypos -= row * ((screenHeight / 3) + borderWidth);
+        c = Xpos / (screenWidth / 9);
+        r = Ypos / (screenHeight / 9);
 
         if (this->ultra_board[row][col]->isEnable == false)
             return false;

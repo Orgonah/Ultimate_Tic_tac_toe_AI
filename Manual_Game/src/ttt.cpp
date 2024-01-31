@@ -1,8 +1,8 @@
 #include "ttt.h"
 
 ttt::ttt(int row, int col) {
-    this->width = row * ((screenWidth / 3) + borderWidth);
-    this->height = col * ((screenHeight / 3) + borderWidth);
+    this->width = col * ((screenWidth / 3) + borderWidth);
+    this->height = row * ((screenHeight / 3) + borderWidth);
     this->win = 0;
     this->full = false;
     this->isEnable = true;
@@ -12,11 +12,11 @@ void ttt::DrawBoard() {
     DrawRectangle(width, height, screenWidth / 3, screenHeight/3, darkPurple);
     for (int row = 0; row < 3; row++) {
         for (int col = 0; col < 3; col++) {
-            DrawLine(width + (screenWidth / 9) * row, height, width + (screenWidth / 9) * row, height + screenWidth / 3, lightPurple);
-            DrawLine(width, height + (screenHeight / 9) * col, width + screenWidth/3, height + (screenHeight / 9) * col, lightPurple);
+            DrawLine(width + (screenWidth / 9) * col, height, width + (screenWidth / 9) * col, height + screenWidth / 3, lightPurple);
+            DrawLine(width, height + (screenHeight / 9) * row, width + screenWidth/3, height + (screenHeight / 9) * row, lightPurple);
 
-            if (board[row][col] == 1) DrawText("X", width + (screenWidth / 9)*row + screenWidth / 36, height + (screenHeight / 9) * col + screenHeight / 50, screenHeight / 12, darkGreen);
-            else if (board[row][col] == 2) DrawText("O", width + (screenWidth / 9) * row + screenWidth / 36, height + (screenHeight / 9) * col + screenHeight / 50, screenHeight / 12, darkYellow);
+            if (board[row][col] == 1) DrawText("X", width + (screenWidth / 9) * col + screenWidth / 36, height + (screenHeight / 9) * row + screenHeight / 50, screenHeight / 12, darkGreen);
+            else if (board[row][col] == 2) DrawText("O", width + (screenWidth / 9) * col + screenWidth / 36, height + (screenHeight / 9) * row + screenHeight / 50, screenHeight / 12, darkYellow);
         }
 
     }
