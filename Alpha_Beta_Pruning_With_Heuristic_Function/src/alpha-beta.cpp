@@ -4,8 +4,8 @@
 
 using namespace std;
 
-const int MAX = 1000;
-const int MIN = -1000;
+const int MAX = 100;
+const int MIN = -100;
 
 class UltimateTicTacToeHeuristic {
 public:
@@ -62,10 +62,10 @@ int minimax(Uttt board,
 	if (Row != -1) {
 		board.UpdateBoard(Row, Col, R, C, maximizingPlayer);		
 	}
-	if (depth == 6) {
+	if (depth == 9) {
 		return  UltimateTicTacToeHeuristic::evaluate(board);
 	}
-	int best;
+	int best, move = -1;
 	if (maximizingPlayer) {
 		best = MIN;
 		for (int row = 0; row < 3; row++) {
@@ -75,19 +75,21 @@ int minimax(Uttt board,
 						for (int c = 0; c < 3; c++) {
 							if (board.ultra_board[row][col].isValid(r, c)) {
 								int val = minimax(board, false, alpha, beta, row, col, r, c, depth + 1);
-								if (R == -1) {
-									return row + col * 10 + r * 100 + c * 1000;
+								if (R == -1 && val > best) {
+									move = row + col * 10 + r * 100 + c * 1000;
 								}
 								best = max(best, val);
 								alpha = max(alpha, best);
-								board.ultra_board[row][col].board[r][c] = 0;
 								if (beta <= alpha)
-									break;
+									goto BR1;
 							}
 						}
 					}
 				}
 			}	
+		}
+		BR1: if (R == -1) {
+			return move;
 		}
 	}
 
@@ -100,14 +102,10 @@ int minimax(Uttt board,
 						for (int c = 0; c < 3; c++) {
 							if (board.ultra_board[row][col].isValid(r, c)) {
 								int val = minimax(board, true, alpha, beta, row, col, r, c, depth + 1);
-								if (R == -1) {
-									return row + col * 10 + r * 100 + c * 1000;
-								}
 								best = min(best, val);
 								beta = min(beta, best);
-								board.ultra_board[row][col].board[r][c] = 0;
 								if (beta <= alpha)
-									break;
+									goto BR2;
 							}
 						}
 					}
@@ -115,6 +113,7 @@ int minimax(Uttt board,
 			}
 		}
 	}
+	BR2:
 	return best;
 }
 
