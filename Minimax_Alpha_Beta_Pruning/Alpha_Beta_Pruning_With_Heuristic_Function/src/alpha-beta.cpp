@@ -4,8 +4,8 @@
 
 using namespace std;
 
-const int MAX = 100;
-const int MIN = -100;
+const int MAX = 300;
+const int MIN = -300;
 
 class UltimateTicTacToeHeuristic {
 public:
@@ -14,15 +14,16 @@ public:
 
 		// Check for a win or loss
 		if (board.winState() == 1) {
-			return 100;
+			return 300;
 		}
 		else if (board.winState() == -1) {
-			return -100;
+			return -300;
 		}
 
 		int win_score = evalWins(board);
 		int two_score = evalTwo(board);
-		int total_score = win_score + two_score;
+		int two_win_score = evalTwoWins(board);
+		int total_score = win_score + two_score + two_win_score;
 		return total_score;
 	}
 
@@ -48,6 +49,76 @@ public:
 			}
 		}
 		return two_score;
+	}
+
+	static int evalTwoWins(Uttt& board) {
+		int score = 0;
+		int count1, count2;
+		for (int row = 0; row < 3; row++) {
+			count1 = 0;
+			count2 = 0;
+			for (int col = 0; col < 3; col++) {
+				count1 += (board.ultra_board[row][col].win == 2);
+				count2 += (board.ultra_board[row][col].win == 1);
+				count1 -= 2*(board.ultra_board[row][col].win == 1);
+				count2 += 2*(board.ultra_board[row][col].win == 2);
+			}      
+			if (count1 == 2) {
+				score +=50;
+			}
+			if (count2 == 2) {
+				score -=50;
+			}
+		}
+
+		for (int col = 0; col < 3; col++) {
+			count1 = 0;
+			count2 = 0;
+			for (int row = 0; row < 3; row++) {
+				count1 += (board.ultra_board[row][col].win == 2);
+				count2 += (board.ultra_board[row][col].win == 1);
+				count1 -= 2*(board.ultra_board[row][col].win == 1);
+				count2 += 2*(board.ultra_board[row][col].win == 2);
+			}
+			if (count1 == 2) {
+				score+=50;
+			}
+			if (count2 == 2) {
+				score -=50;
+			}
+		}
+
+		count1 = 0;
+		count2 = 0;
+		for (int i = 0; i < 3; i++) {
+			count1 += (board.ultra_board[i][i].win == 2);
+			count2 += (board.ultra_board[i][i].win == 1);
+			count1 -= 2*(board.ultra_board[i][i].win == 1);
+			count2 += 2*(board.ultra_board[i][i].win == 2);
+		}
+		if (count1 == 2) {
+			score +=50;
+		}
+		if (count2 == 2) {
+			score -=50;
+		}
+
+		count1 = 0;
+		count2 = 0;
+		for (int i = 0; i < 3; i++) {
+			count1 += (board.ultra_board[i][2-i].win == 2);
+			count2 += (board.ultra_board[i][2-i].win == 1);
+			count1 -= 2*(board.ultra_board[i][2-i].win == 1);
+			count2 += 2*(board.ultra_board[i][2-i].win == 2);
+		}
+		if (count1 == 2) {
+			score +=50;
+		}
+		if (count2 == 2) {
+			score -=50;
+		}
+
+		return score;
 	}
 };
 

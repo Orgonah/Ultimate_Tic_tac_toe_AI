@@ -82,6 +82,7 @@ int ttt::winState() {
     return 0;
 }
 
+//potential win or threat
 int ttt::evalTwo() {
     int score = 0;
     int count1, count2;
@@ -91,6 +92,8 @@ int ttt::evalTwo() {
         for (int col = 0; col < 3; col++) {
             count1 += (this->board[row][col] == 2);
             count2 += (this->board[row][col] == 1);
+            count1 -= 2*(this->board[row][col] == 1);
+            count2 += 2*(this->board[row][col] == 2);
         }      
         if (count1 == 2) {
             score ++;
@@ -106,6 +109,8 @@ int ttt::evalTwo() {
         for (int row = 0; row < 3; row++) {
             count1 += (this->board[row][col] == 2);
             count2 += (this->board[row][col] == 1);
+            count1 -= 2*(this->board[row][col] == 1);
+            count2 += 2*(this->board[row][col] == 2);
         }
         if (count1 == 2) {
             score++;
@@ -120,6 +125,8 @@ int ttt::evalTwo() {
     for (int i = 0; i < 3; i++) {
         count1 += (this->board[i][i] == 2);
         count2 += (this->board[i][i] == 1);
+        count1 -= 2*(this->board[i][i] == 1);
+        count2 += 2*(this->board[i][i] == 2);
     }
     if (count1 == 2) {
         score ++;
@@ -133,6 +140,8 @@ int ttt::evalTwo() {
     for (int i = 0; i < 3; i++) {
         count1 += (this->board[i][2-i] == 2);
         count2 += (this->board[i][2-i] == 1);
+        count1 -= 2*(this->board[i][2-i] == 1);
+        count2 += 2*(this->board[i][2-i] == 2);
     }
     if (count1 == 2) {
         score ++;
